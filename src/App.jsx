@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './LoginPage'
 import UploadPage from './UploadPage'
+import ResultsPage from './ResultsPage'
 import { useAuth } from './AuthContext'
 
 function ProtectedRoute({ children }) {
@@ -17,6 +18,14 @@ function App() {
         element={
           <ProtectedRoute>
             <UploadPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/results/:datasetId"
+        element={
+          <ProtectedRoute>
+            <ResultsPage />
           </ProtectedRoute>
         }
       />
