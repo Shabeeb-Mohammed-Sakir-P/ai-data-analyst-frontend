@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import LoginPage from './LoginPage'
+import UploadPage from './UploadPage'
+import { useAuth } from './AuthContext'
+
+function ProtectedRoute({ children }) {
+  const { token } = useAuth()
+  return token ? children : <Navigate to="/login" />
+}
 
 function App() {
-  const [backendStatus, setBackendStatus] = useState('checking...')
-
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/health')
-      .then(response => {
-        setBackendStatus(response.data.health)
-      })
-      .catch(error => {
-        setBackendStatus('backend not reachable')
-        console.error(error)
-      })
-  }, [])
-
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>AI Data Analyst Agent</h1>
-      <p>Backend status: <strong>{backendStatus}</strong></p>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/upload"
+        element={
+          <ProtectedRoute>
+            <UploadPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
   )
 }
 
