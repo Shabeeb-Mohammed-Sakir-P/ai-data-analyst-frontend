@@ -16,7 +16,12 @@ function ResultsPage() {
       .get(`${API_BASE}/results/${datasetId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((response) => setResults(response.data))
+      .then((response) => {
+        console.log('FULL RESULTS:', response.data)
+        console.log('chart_specs:', response.data.chart_specs)
+        console.log('chart_filepaths:', response.data.chart_filepaths)
+        setResults(response.data)
+      })
       .catch((err) => setError(err.response?.data?.detail || 'Could not load results'))
   }, [datasetId])
 
