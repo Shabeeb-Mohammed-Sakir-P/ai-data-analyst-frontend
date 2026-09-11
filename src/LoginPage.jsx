@@ -36,7 +36,7 @@ function LoginPage() {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/${endpoint}`,
+       `${import.meta.env.VITE_API_BASE}/${endpoint}`,
         {
           email: email.trim(),
           password,
